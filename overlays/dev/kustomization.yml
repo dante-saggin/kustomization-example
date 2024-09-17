@@ -19,7 +19,7 @@ images:
 - name: myplaceapp1:latest
   newName: eu.gcr.io/app1replaced
   newTag: v0.5
-- name: myplacekg:latest
+- name: myplaceapp2:latest
   newName: eu.gcr.io/app2replaced
   newTag: v0.6
 #this will create the secrets based on the content of a file.
