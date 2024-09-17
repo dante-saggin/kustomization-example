@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app1
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: app1
+        version: v1
+    spec:
+      containers:
+      - name: app1-poc
+        image: myplaceapp1:latest
+        volumeMounts:
+          - name: secret-volume
+            readOnly: true
+            mountPath: "/etc/secret-volume"
+          - name: config-volume
+            readOnly: true
+            mountPath: "/etc/config-volume"
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: prod
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "1"
+          limits:
+            memory: "1Gi"
+            cpu: "1"
+        ports:
+        - name: http
+          containerPort: 9000
+        livenessProbe:
+          httpGet:
+            path: /management/health
+            port: 9000
+          initialDelaySeconds: 180
+          periodSeconds: 10
+          failureThreshold: 20
+        readinessProbe:
+          httpGet:
+            path: /management/health
+            port: 9000
+          initialDelaySeconds: 180
+          periodSeconds: 10
+          failureThreshold: 5
+      volumes:
+        - name: config-volume
+          configMap:
+            name: config-map
+        - name: secret-volume
+          secret:
+            secretName: database-creds
