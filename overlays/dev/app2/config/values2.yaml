@@ -1,0 +1,9 @@
+auth:
+  username: user2
+  existingPasswordSecret: rabbitmq-credentials2
+rbac:
+  create: true
+memoryHighWatermark:
+  enabled: true
+  type: "relative"
+  value: 0.4

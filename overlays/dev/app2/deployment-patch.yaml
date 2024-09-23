@@ -1,0 +1,31 @@
+# if the item exists in the yaml
+- op: replace
+  path: /spec/template/spec/serviceAccount
+  value: backend-sa
+# if the item does not exists in the yaml
+- op: add
+  path: /spec/template/spec/containers/0/resources/requests/cpu
+  value: "0.5"
+
+- op: add
+  path: /spec/template/spec/containers/0/resources/limits/cpu
+  value: "0.5"
+# if the item does not exists in the and it´s necessary to include an entire three.
+- op: add
+  path: /spec/template/spec/affinity
+  value:
+    podAntiAffinity: 
+      preferredDuringSchedulingIgnoredDuringExecution: # Soft preference to distribute pods when scaling in diferent nodes
+        - podAffinityTerm: 
+            labelSelector:
+              matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - backend
+            topologyKey: kubernetes.io/hostname # In order to Distribute Across Nodes
+          weight: 100
+
+
+
+

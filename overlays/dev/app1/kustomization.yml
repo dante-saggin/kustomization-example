@@ -1,0 +1,42 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../../base/app1/
+patches:
+- path: deployment-patch.yaml
+  target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: app1
+- path: service-patch.yaml
+  target:
+    version: v1
+    kind: Service
+    name: app1
+#this will replace the images
+images:
+- name: myplaceapp1:latest
+  newName: eu.gcr.io/app1replaced
+  newTag: v0.5
+#this will create the secrets based on the content of a file.
+secretGenerator:
+  - name: database-creds
+    files:
+      - user=../secret/username.txt
+      - password=../secret/password.txt
+  - name: database-creds2
+    files:
+      - user=../secret/username.txt
+      - password=../secret/password.txt
+#this will creage a config map
+configMapGenerator:
+  - name: config-map
+    files:
+      - values.yaml=../config/values.yaml
+  - name: config-map2
+    files:
+      - values.yaml=../config/values2.yaml
+#this will tell how to replace the configmap and secret.      
+configurations:
+  - ../kustomizeconfig.yaml

@@ -1,0 +1,12 @@
+# t# This file is for teaching kustomize how to substitute name and namespace
+nameReference:
+- kind: ConfigMap
+  version: v1
+  fieldSpecs:
+  - path: template/spec/volumes/0/configMap/name
+    kind: Deployment
+- kind: Secret
+  version: v1
+  fieldSpecs:
+  - path: template/spec/volumes/1/secret/secretName
+    kind: Deployment
