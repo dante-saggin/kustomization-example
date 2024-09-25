@@ -7,8 +7,10 @@ overlays/dev or overlays/prd
 
 in future to apply it in an environment 
 
-> kubectl apply -k .
+> kubectl apply -k . 
 
-For more information
+For the app1 kustomiation to build
 
-https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/
+> kustomize build . --load-restrictor LoadRestrictionsNone
+
+This makes brakes the self containability of the kustomization files but allows us to reuse config, yamls and secretes.

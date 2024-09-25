@@ -14,6 +14,17 @@ patches:
     version: v1
     kind: Service
     name: app1
+- path: app2/deployment-patch.yaml
+  target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: app2
+- path: app2/service-patch.yaml
+  target:
+    version: v1
+    kind: Service
+    name: app2
 #this will replace the images
 images:
 - name: myplaceapp1:latest
