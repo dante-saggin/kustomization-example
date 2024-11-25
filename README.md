@@ -14,3 +14,7 @@ For the app1 kustomiation to build
 > kustomize build . --load-restrictor LoadRestrictionsNone
 
 This makes brakes the self containability of the kustomization files but allows us to reuse config, yamls and secretes.
+
+
+
+
